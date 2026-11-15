@@ -1,6 +1,7 @@
 import os
-from openai import OpenAI
+
 from dotenv import load_dotenv
+from openai import OpenAI
 
 
 def main():
@@ -23,6 +24,11 @@ def main():
             }
         ],
     )
+    if response.usage is not None:
+        print("Prompt tokens: " + str(response.usage.prompt_tokens))
+        print("Response tokens: " + str(response.usage.completion_tokens))
+    else:
+        raise RuntimeError("Usage is None")
 
     print(response.choices[0].message.content)
 
