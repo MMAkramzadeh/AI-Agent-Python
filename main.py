@@ -17,22 +17,22 @@ def main():
     )
     parser = argparse.ArgumentParser()
     parser.add_argument("user_prompt", type=str, help="Your prompt")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args = parser.parse_args()
+
+    messages = [{"role": "user", "content": args.user_prompt}]
 
     response = client.chat.completions.create(
         model="openrouter/free",
-        messages=[
-            {
-                "role": "user",
-                "content": args.user_prompt,
-            }
-        ],
+        messages=messages,
     )
-    if response.usage is not None:
-        print("Prompt tokens: " + str(response.usage.prompt_tokens))
-        print("Response tokens: " + str(response.usage.completion_tokens))
-    else:
+    if response.usage is None:
         raise RuntimeError("Usage is None")
+
+    if args.verbose:
+        print(f"User prompt: {args.user_prompt}")
+        print(f"Prompt tokens: {response.usage.prompt_tokens}")
+        print(f"Response tokens: {response.usage.completion_tokens}")
 
     print(response.choices[0].message.content)
 
