@@ -1,8 +1,11 @@
 import argparse
+import json
 import os
 
 from dotenv import load_dotenv
 from openai import OpenAI
+
+from call_function import available_functions
 from prompts import system_prompt
 
 
@@ -18,7 +21,9 @@ def main():
     )
     parser = argparse.ArgumentParser()
     parser.add_argument("user_prompt", type=str, help="Your prompt")
-    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="Enable verbose output"
+    )
     args = parser.parse_args()
 
     messages = [
@@ -30,7 +35,15 @@ def main():
         model="openrouter/free",
         messages=messages,
         temperature=0,
+        tools=available_functions,
     )
+
+    message = response.choices[0].message
+    if message.tool_calls is not None:
+        for tool_call in message.tool_calls:
+            function_args = json.loads(tool_call.function.arguments or "{}")
+            print(f"Calling function: {tool_call.function.name}({function_args})")
+
     if response.usage is None:
         raise RuntimeError("Usage is None")
 
