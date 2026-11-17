@@ -2,6 +2,29 @@ import os
 import subprocess
 
 
+schema_run_python_file = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": "Run a python file (ending in .py) in a specified directory relative to the working directory, providing both STDOUT & STDERR with Exit-code",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "python file (ending in .py) to run the file, path is relative to the working directory (default is the working directory itself)",
+                },
+                "args": {
+                    "type": "array",
+                    "description": "the arguments for running the python file who are items and strings",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
+
+
 def run_python_file(
     working_directory: str, file_path: str, args: list[str] | None = None
 ) -> str:

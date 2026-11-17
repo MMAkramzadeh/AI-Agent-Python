@@ -1,5 +1,23 @@
 import os
 
+schema_get_file_content = {
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Get contents of a file in a the specified directory relative to the working directory, providing the contents of the file",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description": "File path to get the contents of the file from, relative to the working directory (default is the working directory itself)",
+                },
+            },
+            "required": ["file_path"],
+        },
+    },
+}
+
 
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
