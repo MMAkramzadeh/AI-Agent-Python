@@ -11,7 +11,7 @@ from prompts import system_prompt
 
 def main():
     load_dotenv()
-    api_key = os.environ.get("NVDIA_API_KEY")
+    api_key = os.environ.get("NVIDIA_API_KEY")
     if api_key is None:
         raise RuntimeError("No API key is set.")
 
@@ -30,7 +30,8 @@ def main():
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": args.user_prompt},
     ]
-    for _ in range(20):
+    tool_call_limit = True
+    for _ in range(30):
         response = client.chat.completions.create(
             model="nvidia/nemotron-3.5-super-vl-120b-a12b",
             messages=messages,
@@ -44,13 +45,15 @@ def main():
             for tool_call in message.tool_calls:
                 result_message = call_function(tool_call, args.verbose)
                 if result_message["content"] == "":
-                    raise Exception
+                    raise Exception("No Content on message.")
                 if args.verbose:
                     print(f"-> {result_message['content']}")
                 messages.append(result_message)
         else:
+            tool_call_limit = False
             break
-    if messages[-1].tool_calls is not None:
+
+    if tool_call_limit:
         print("Maximum tool calling")
         sys.exit(1)
 
