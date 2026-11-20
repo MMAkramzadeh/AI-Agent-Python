@@ -50,7 +50,7 @@ ai-agent/
 
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/MMAkramzadeh/AI-Agent-Python.git
    cd ai-agent
    ```
 
