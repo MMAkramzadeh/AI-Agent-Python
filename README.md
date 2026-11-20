@@ -19,7 +19,7 @@ ai-agent/
 ├── prompts.py              # System prompt for the AI agent
 ├── pyproject.toml          # Project configuration and dependencies
 ├── uv.lock                 # Locked dependency versions
-├── .env                    # Environment variables (API keys)
+├── .env                    # Environment variables (API keys) - gitignored
 ├── .gitignore              # Git ignore rules
 ├── .python-version         # Python version specification
 ├── functions/              # Core function implementations
@@ -27,11 +27,13 @@ ai-agent/
 │   ├── get_file_content.py # Read file contents
 │   ├── write_file.py       # Write/overwrite files
 │   └── run_python_file.py  # Execute Python scripts
-├── calculator/             # Example submodule
+├── calculator/             # Example submodule (gitignored)
 │   ├── explore.py          # Directory tree scanner
 │   ├── test.txt            # Test file
-│   └── README.md           # Calculator module documentation
-└── tests/                  # Test files
+│   ├── lorem.txt           # Test file
+│   ├── README.md           # Calculator module documentation
+│   └── pkg/                # Example package directory
+└── tests/                  # Test files (root level)
     ├── test_get_files_info.py
     ├── test_get_file_content.py
     ├── test_write_file.py
@@ -49,17 +51,20 @@ ai-agent/
 ### Setup
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/MMAkramzadeh/AI-Agent-Python.git
    cd ai-agent
    ```
 
 2. Install dependencies:
+
    ```bash
    uv sync
    ```
 
 3. Create a `.env` file with your NVIDIA API key:
+
    ```bash
    echo 'NVIDIA_API_KEY="your-api-key-here"' > .env
    ```
@@ -91,12 +96,12 @@ uv run main.py "Run the calculator explore script"
 
 The agent has access to the following functions:
 
-| Function | Description |
-|----------|-------------|
-| `get_files_info` | List files and directories with sizes and types |
-| `get_file_content` | Read the contents of a file |
-| `write_file` | Write or overwrite a file |
-| `run_python_file` | Execute a Python script with arguments |
+| Function           | Description                                     |
+| ------------------ | ----------------------------------------------- |
+| `get_files_info`   | List files and directories with sizes and types |
+| `get_file_content` | Read the contents of a file                     |
+| `write_file`       | Write or overwrite a file                       |
+| `run_python_file`  | Execute a Python script with arguments          |
 
 ## Configuration
 
@@ -106,6 +111,8 @@ The agent has access to the following functions:
 [project]
 name = "ai-agent"
 version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "openai===2.44.0",
@@ -115,9 +122,9 @@ dependencies = [
 
 ### Environment Variables
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `NVIDIA_API_KEY` | API key for NVIDIA's model endpoints | Yes |
+| Variable         | Description                          | Required |
+| ---------------- | ------------------------------------ | -------- |
+| `NVIDIA_API_KEY` | API key for NVIDIA's model endpoints | Yes      |
 
 ## Security
 
@@ -125,6 +132,7 @@ dependencies = [
 - Path traversal attacks are prevented via `os.path.commonpath` validation
 - The `.env` file containing API keys is gitignored
 - `__pycache__`, `.venv`, and build artifacts are gitignored
+- The `calculator/` directory and test files are gitignored
 
 ## Contributing
 

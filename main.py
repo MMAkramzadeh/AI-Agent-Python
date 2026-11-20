@@ -30,7 +30,7 @@ def main():
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": args.user_prompt},
     ]
-    tool_call_limit = True
+    response = None
     for _ in range(30):
         response = client.chat.completions.create(
             model="nvidia/nemotron-3.5-super-vl-120b-a12b",
@@ -41,7 +41,7 @@ def main():
         )
         message = response.choices[0].message
         messages.append(message)
-        if message.tool_calls is not None:
+        if message.tool_calls:
             for tool_call in message.tool_calls:
                 result_message = call_function(tool_call, args.verbose)
                 if result_message["content"] == "":
@@ -50,14 +50,9 @@ def main():
                     print(f"-> {result_message['content']}")
                 messages.append(result_message)
         else:
-            tool_call_limit = False
             break
 
-    if tool_call_limit:
-        print("Maximum tool calling")
-        sys.exit(1)
-
-    if response.usage is None:
+    if response is None or response.usage is None:
         raise RuntimeError("Usage is None")
     if args.verbose:
         print(f"User prompt: {args.user_prompt}")

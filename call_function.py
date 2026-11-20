@@ -1,4 +1,5 @@
 import json
+import os
 from collections.abc import Callable
 
 from functions.get_file_content import get_file_content, schema_get_file_content
@@ -37,7 +38,7 @@ def call_function(tool_call, verbose: bool = False) -> dict:
             "content": f"Error: Unknown function: {function_name}",
         }
 
-    function_args["working_directory"] = ""
+    function_args["working_directory"] = os.getcwd()
     result = function_map[function_name](**function_args)
     return {
         "role": "tool",
