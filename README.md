@@ -22,11 +22,11 @@ ai-agent/
 ├── .env                    # Environment variables (API keys) - gitignored
 ├── .gitignore              # Git ignore rules
 ├── .python-version         # Python version specification
-├── functions/              # Core function implementations
-│   ├── get_files_info.py   # List directory contents
-│   ├── get_file_content.py # Read file contents
-│   ├── write_file.py       # Write/overwrite files
-│   └── run_python_file.py  # Execute Python scripts
+└── functions/              # Core function implementations
+   ├── get_files_info.py   # List directory contents
+   ├── get_file_content.py # Read file contents
+   ├── write_file.py       # Write/overwrite files
+   └── run_python_file.py  # Execute Python scripts
 ```
 
 ## Installation
