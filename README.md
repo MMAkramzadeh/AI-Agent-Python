@@ -27,17 +27,6 @@ ai-agent/
 │   ├── get_file_content.py # Read file contents
 │   ├── write_file.py       # Write/overwrite files
 │   └── run_python_file.py  # Execute Python scripts
-├── calculator/             # Example submodule (gitignored)
-│   ├── explore.py          # Directory tree scanner
-│   ├── test.txt            # Test file
-│   ├── lorem.txt           # Test file
-│   ├── README.md           # Calculator module documentation
-│   └── pkg/                # Example package directory
-└── tests/                  # Test files (root level)
-    ├── test_get_files_info.py
-    ├── test_get_file_content.py
-    ├── test_write_file.py
-    └── test_run_python_file.py
 ```
 
 ## Installation
@@ -111,7 +100,7 @@ The agent has access to the following functions:
 [project]
 name = "ai-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "Simple agentic AI that runs in your CLI"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
